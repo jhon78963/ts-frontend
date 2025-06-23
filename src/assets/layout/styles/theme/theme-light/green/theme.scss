@@ -1,0 +1,21 @@
+// $primaryLightColor: #9adab7 !default;
+// $primaryDarkColor: #157943 !default;
+// $primaryDarkerColor: #0e6646 !default;
+// $primaryTextColor: #ffffff !default;
+
+
+$primaryColor: #8bc53b !default;
+$primaryLightColor:  lighten($primaryColor, 20%) !default; // +20% luz → tono pastel suave
+$primaryDarkColor:   darken($primaryColor, 20%) !default;   // -20% luz → verde más intenso
+$primaryDarkerColor: darken($primaryColor, 30%) !default;   // -30% luz → verde profundo
+$primaryTextColor:   #ffffff !default;                      // texto blanco sobre fondo oscuro
+$primaryLighterColor: rgba($primaryLightColor, 0.1) !default;
+
+$highlightBg: $primaryLighterColor !default;
+$highlightTextColor: $primaryColor !default;
+$highlightFocusBg: rgba($primaryColor, 0.24) !default;
+
+@import '../_variables';
+@import '../../theme-base/_components';
+@import '../_extensions';
+@import '../../extensions/_fullcalendar'

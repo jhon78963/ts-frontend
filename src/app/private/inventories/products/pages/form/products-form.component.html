@@ -1,0 +1,117 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveProductButton()" class="pt-5">
+    <div class="p-fluid p-formgrid grid">
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-text
+          label="Descripción"
+          for="product"
+          type="text"
+          id="product"
+          placeholder="Ingresa la descripción del producto"
+          controlName="name"></app-input-text>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-text
+          label="Stock"
+          for="stock"
+          type="text"
+          id="stock"
+          placeholder="Ingresa el stock del producto"
+          controlName="stock"
+          pKeyFilter="int"></app-input-text>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-text
+          label="Precio de Compra"
+          for="purchasePrice"
+          type="text"
+          id="purchasePrice"
+          placeholder="Ingresa el precio de compra del producto"
+          controlName="purchasePrice"
+          pKeyFilter="num"></app-input-text>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-text
+          label="Precio de Venta"
+          for="salePrice"
+          type="text"
+          id="salePrice"
+          placeholder="Ingresa el precio de venta del producto"
+          controlName="salePrice"
+          pKeyFilter="num"></app-input-text>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-autocomplete-api
+          id="categoryId"
+          for="categoryId"
+          label="Categoría"
+          type="text"
+          placeholder="Escriba la categoría a buscar"
+          collectionToCall="categories/autocomplete"
+          collectionToSave="categories"
+          bodyColumn="description"
+          queryParam="search"
+          [itemId]="categoryId"
+          (itemSelected)="setFormField('categoryId', $event)">
+        </app-input-autocomplete-api>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-autocomplete-api
+          id="brandId"
+          for="brandId"
+          label="Marca"
+          type="text"
+          placeholder="Escriba la marca a buscar"
+          collectionToCall="brands/autocomplete"
+          collectionToSave="brands"
+          bodyColumn="description"
+          queryParam="search"
+          [itemId]="brandId"
+          (itemSelected)="setFormField('brandId', $event)">
+        </app-input-autocomplete-api>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-autocomplete-api
+          id="measurementId"
+          for="measurementId"
+          label="Unidad de medida"
+          type="text"
+          placeholder="Escriba la unidad de medida a buscar"
+          collectionToCall="measurements/autocomplete"
+          collectionToSave="measurements"
+          bodyColumn="description"
+          queryParam="search"
+          [itemId]="measurementId"
+          (itemSelected)="setFormField('measurementId', $event)">
+        </app-input-autocomplete-api>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <input
+          type="file"
+          id="image"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          class="p-inputtext p-component w-full file-input" />
+        <div *ngIf="imagePreview" class="mt-2">
+          <img [src]="imagePreview" alt="Vista previa" width="150" />
+        </div>
+      </div>
+      <div class="flex justify-content-end w-full gap-2 p-4">
+        <button
+          [routerLink]="['/inventories/products']"
+          type="button"
+          class="w-full p-button-secondary border-none"
+          pButton
+          [outlined]="true"
+          label="Regresar"></button>
+        <button
+          class="w-full"
+          type="submit"
+          pButton
+          label="Guardar"
+          [disabled]="!isFormValid"></button>
+      </div>
+    </div>
+  </form>
+}

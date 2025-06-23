@@ -1,0 +1,49 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveSupplierButton()">
+    <div class="p-fluid p-formgrid grid">
+      <div class="field col-12">
+        <app-input-text
+          label="RUC"
+          for="ruc"
+          type="text"
+          id="ruc"
+          placeholder="Ingresa el nro de ruc"
+          controlName="ruc"
+          pKeyFilter="int"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Razón Social"
+          for="businessName"
+          type="text"
+          id="businessName"
+          placeholder="Ingresa la razón social del proveedor"
+          controlName="businessName"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Encargado"
+          for="manager"
+          type="text"
+          id="manager"
+          placeholder="Ingresa nombre y apellidos del encargado"
+          controlName="manager"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Dirección"
+          for="address"
+          type="text"
+          id="address"
+          placeholder="Ingresa la dirección del negocio"
+          controlName="address"></app-input-text>
+      </div>
+      <button
+        type="submit"
+        pButton
+        label="Guardar"
+        class="mt-3"
+        [disabled]="isValidForm"></button>
+    </div>
+  </form>
+}

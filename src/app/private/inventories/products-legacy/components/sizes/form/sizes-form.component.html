@@ -1,0 +1,44 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveSizeButton()">
+    <div class="p-fluid p-formgrid grid mt-2">
+      <div class="field col-12 pb-0">
+        <app-input-autocomplete-api
+          id="sizeId"
+          for="sizeId"
+          label="Talla"
+          type="text"
+          placeholder="Escriba la talla a buscar"
+          collectionToCall="sizes/autocomplete"
+          collectionToSave="sizes"
+          bodyColumn="description"
+          queryParam="search"
+          (itemSelected)="getItemSelected($event)"></app-input-autocomplete-api>
+      </div>
+      <div class="field col-12 pb-0">
+        <app-input-text
+          placeholder="Ingrese stock"
+          label="Stock"
+          controlName="stock"
+          pKeyFilter="num"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-chips-api
+          id="colors"
+          for="colors"
+          label="Colores"
+          type="text"
+          placeholder="Escriba el color a buscar"
+          collectionToCall="colors/autocomplete"
+          collectionToSave="colors"
+          bodyColumn="description"
+          queryParam="search"
+          (itemSelected)="getItemsSelected($event)"></app-input-chips-api>
+      </div>
+      <button
+        type="submit"
+        pButton
+        label="Guardar"
+        [disabled]="!isValid"></button>
+    </div>
+  </form>
+}

@@ -1,0 +1,21 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveBrandButton()">
+    <div class="p-fluid p-formgrid grid">
+      <div class="field col-12">
+        <app-input-text
+          label="Marca"
+          for="brand"
+          type="text"
+          id="brand"
+          placeholder="Ingresa la marca"
+          controlName="description"></app-input-text>
+      </div>
+      <button
+        type="submit"
+        pButton
+        label="Guardar"
+        class="mt-3"
+        [disabled]="isValidForm"></button>
+    </div>
+  </form>
+}

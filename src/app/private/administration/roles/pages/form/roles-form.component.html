@@ -1,0 +1,16 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="buttonSaveRole()">
+    <div class="p-fluid p-formgrid grid">
+      <div class="field col-12">
+        <app-input-text
+          label="Rol"
+          for="role"
+          type="text"
+          id="role"
+          placeholder="Ingresa el rol"
+          controlName="name"></app-input-text>
+      </div>
+      <button type="submit" pButton label="Guardar" class="mt-3"></button>
+    </div>
+  </form>
+}

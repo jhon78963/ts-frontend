@@ -1,0 +1,50 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveCustomerButton()">
+    <div class="p-fluid p-formgrid grid">
+      <div class="field col-12">
+        <app-input-text
+          label="Dni"
+          for="dni"
+          type="text"
+          id="dni"
+          placeholder="Ingresa el nro de dni"
+          controlName="dni"
+          pKeyFilter="int"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Nombres"
+          for="name"
+          type="text"
+          id="name"
+          placeholder="Ingresa el(los) nombre(s) del cliente"
+          controlName="name"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Apellidos"
+          for="surname"
+          type="text"
+          id="surname"
+          placeholder="Ingresa el(los) apellido(s) del cliente"
+          controlName="surname"></app-input-text>
+      </div>
+      <div class="field col-12">
+        <app-input-text
+          label="Celular"
+          for="phone"
+          type="text"
+          id="phone"
+          placeholder="Ingresa el telefono del cliente"
+          controlName="phone"
+          pKeyFilter="int"></app-input-text>
+      </div>
+      <button
+        type="submit"
+        pButton
+        label="Guardar"
+        class="mt-3"
+        [disabled]="isValidForm"></button>
+    </div>
+  </form>
+}

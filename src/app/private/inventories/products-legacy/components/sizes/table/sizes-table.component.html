@@ -1,0 +1,84 @@
+<form [formGroup]="mainForm">
+  <div class="table-container">
+    <table class="table">
+      <thead class="table__header">
+        <tr>
+          <th>Talla</th>
+          <th>Stock</th>
+          <th>Precio</th>
+          <th>Colores</th>
+          <th class="w-2">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody class="table__body" formArrayName="sizes">
+        @for (size of sizesArray.controls; track size; let i = $index) {
+          <tr class="table__body--tr" [formGroupName]="i">
+            <td>
+              <app-input-autocomplete-api
+                id="sizeId-{{ i }}"
+                for="sizeId-{{ i }}"
+                label="Talla"
+                type="text"
+                placeholder="Escriba la talla a buscar"
+                collectionToCall="sizes/autocomplete"
+                [collectionToEdit]="size.value.size.value"
+                collectionToSave="sizes"
+                bodyColumn="description"
+                queryParam="search"
+                (itemSelected)="getItemSelected($event, i)">
+              </app-input-autocomplete-api>
+            </td>
+            <td>
+              <span class="p-float-label">
+                <input
+                  class="float"
+                  placeholder="Ingrese stock {{ i }}"
+                  id="stock-{{ i }}"
+                  pInputText
+                  formControlName="stock" />
+                <label for="stock-{{ i }}">Stock</label>
+              </span>
+            </td>
+            <td>
+              <span class="p-float-label">
+                <input
+                  class="float"
+                  placeholder="Ingrese precio"
+                  id="price-{{ i }}"
+                  pInputText
+                  formControlName="price" />
+                <label for="price-{{ i }}">Precio</label>
+              </span>
+            </td>
+            <td>
+              <app-input-chips-api
+                id="colors-{{ i }}"
+                for="colors-{{ i }}"
+                label="Colores"
+                type="text"
+                placeholder="Escriba el color a buscar"
+                collectionToCall="colors/autocomplete"
+                collectionToSave="colors"
+                [collectionToEdit]="size.value.colors"
+                bodyColumn="description"
+                queryParam="search"
+                (itemSelected)="getItemsSelected($event, i)">
+              </app-input-chips-api>
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="close"
+                (click)="removeItem(size.value.size.id, productId, i)">
+                <span aria-hidden="true">
+                  <i class="pi pi-times"></i>
+                </span>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</form>
+<p-confirmDialog />

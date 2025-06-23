@@ -1,0 +1,38 @@
+.pi.pi-times {
+  z-index: 1;
+}
+
+.pi.pi-times:hover {
+  cursor: pointer;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.5rem;
+  top: 52%;
+  color: #83888f;
+  transform: translateY(-50%);
+}
+
+.clear-icon {
+  position: absolute;
+  right: 1.5rem;
+  top: 52%;
+  color: #83888f;
+  transform: translateY(-50%);
+}
+
+.p-inputtext {
+  padding-left: 1rem;
+  padding-right: 2.5rem;
+}
+
+.relative-container {
+  position: relative;
+}
+
+.button-absolute {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

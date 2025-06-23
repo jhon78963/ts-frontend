@@ -1,0 +1,11 @@
+.w-custom {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 1200px) {
+  .w-custom {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
