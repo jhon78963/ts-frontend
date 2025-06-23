@@ -62,7 +62,7 @@
       padding: 0.75rem;
       list-style: none;
       &:hover {
-        background-color: rgba(255, 179, 64, 0.24);
+        background-color: var(--primary-light-color);
         cursor: pointer;
       }
     }
