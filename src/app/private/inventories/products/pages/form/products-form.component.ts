@@ -91,7 +91,8 @@ export class ProductsFormComponent implements OnInit {
           this.categoryId = response.categoryId;
           this.brandId = response.brandId;
           this.measurementId = response.measurementId;
-          this.imagePreview = `${BASE_S3_URL}${response.image}`;
+          if (response.image)
+            this.imagePreview = `${BASE_S3_URL}${response.image}`;
         });
     }
   }

@@ -1,1 +1,57 @@
-<p>form works!</p>
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="saveSaleButton()" class="card p-6">
+    <div class="p-fluid p-formgrid grid mr-0 ml-0">
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-autocomplete-api
+          id="customerId"
+          for="customerId"
+          label="Cliente"
+          type="text"
+          placeholder="Escriba el nombre del cliente a buscar"
+          collectionToCall="customers/autocomplete"
+          collectionToSave="customers"
+          bodyColumn="name"
+          queryParam="search"
+          [itemId]="customerId"
+          (itemSelected)="setFormField('customerId', $event)">
+        </app-input-autocomplete-api>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-date
+          label="Fecha de Emisión"
+          for="date"
+          type="text"
+          id="date"
+          placeholder="Ingresa la fecha de emisión"
+          [showIcon]="false"
+          [showTime]="true"
+          controlName="date"></app-input-date>
+      </div>
+      <div
+        class="flex flex-column justify-content-center pl-3 pr-3 w-custom md:ml-auto md:mr-auto md:mt-4">
+        <div class="flex justify-content-between align-items-center pb-2">
+          <span class="text-lg font-bold">Productos</span>
+          <p-button [outlined]="true" (click)="addProduct()">
+            <i class="pi pi-plus" style="font-size: 1rem"></i>
+          </p-button>
+        </div>
+        <app-product-table
+          [products]="products"
+          [parentForm]="form"
+          [addProductEvent]="addProductEvent"
+          (productSelected)="getProductSeletected($event)"></app-product-table>
+      </div>
+      <div class="flex w-full gap-2">
+        <button
+          [routerLink]="['/operations/sales']"
+          type="button"
+          class="w-full p-button-secondary border-none"
+          pButton
+          [outlined]="true"
+          label="Regresar"></button>
+        <button class="w-full" type="submit" pButton label="Guardar"></button>
+      </div>
+    </div>
+  </form>
+  <p-toast />
+}

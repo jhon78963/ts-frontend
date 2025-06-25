@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
@@ -83,7 +83,6 @@ export class OrdersListComponent implements OnInit {
       money: false,
     },
   ];
-
   cellToAction: any;
   limit: number = 10;
   page: number = 1;
@@ -174,7 +173,7 @@ export class OrdersListComponent implements OnInit {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Deseas anular esta compra?',
-      header: 'Eliminar compra',
+      header: 'Anular compra',
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-danger p-button-text',
       rejectButtonStyleClass: 'p-button-text p-button-text',
@@ -183,7 +182,7 @@ export class OrdersListComponent implements OnInit {
       accept: () => {
         this.ordersService.delete(id).subscribe({
           next: () => {
-            showSuccess(this.messageService, 'La compra ha sido eliminado');
+            showSuccess(this.messageService, 'La compra ha sido cancelada');
             this.getOrders(this.limit, this.page, this.search);
           },
           error: () =>

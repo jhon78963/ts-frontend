@@ -73,6 +73,7 @@ export class ProductsTableComponent implements OnInit, OnChanges {
 
   updateParent() {
     const productsValue = this.productsArray.value;
+    console.log(this.parentForm.get('products')?.value);
     this.parentForm.get('products')?.setValue(productsValue);
   }
 

@@ -24,10 +24,12 @@
                 type="text"
                 placeholder="Escriba el producto a buscar"
                 collectionToCall="products/autocomplete"
-                [collectionToEdit]="product.value.product.value"
                 collectionToSave="products"
                 bodyColumn="name"
                 queryParam="search"
+                [itemId]="
+                  product && product.value.product && product.value.product.id
+                "
                 (itemSelected)="setFormField('product', $event, i)">
               </app-input-autocomplete-api>
             </td>

@@ -1,5 +1,5 @@
-import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../../../../../shared/shared.module';
 import {
   FormBuilder,
@@ -18,6 +18,9 @@ import { Product } from '../../../../inventories/products/models/products.mode';
 import { ProductsTableComponent } from '../../../../inventories/products/components/table/products-table.component';
 import { OrderProductService } from '../../services/orderProducts.service';
 import { forkJoin } from 'rxjs';
+import { showSuccess } from '../../../../../utils/notifications';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-orders-form',
@@ -29,6 +32,7 @@ import { forkJoin } from 'rxjs';
     KeyFilterModule,
     RouterModule,
     ProductsTableComponent,
+    ToastModule,
   ],
   templateUrl: './orders-form.component.html',
   styleUrl: './orders-form.component.scss',
@@ -46,6 +50,7 @@ export class OrdersFormComponent implements OnInit {
     private readonly progressSpinnerService: ProgressSpinnerService,
     private readonly route: ActivatedRoute,
     private readonly datePipe: DatePipe,
+    private readonly messageService: MessageService,
   ) {
     if (this.route.snapshot.paramMap.get('id')) {
       this.orderId = Number(this.route.snapshot.paramMap.get('id'));
@@ -109,7 +114,12 @@ export class OrdersFormComponent implements OnInit {
             );
             forkJoin(updateCalls).subscribe({
               next: () => {
+                this.form.reset();
                 this.progressSpinnerService.hidden();
+                showSuccess(
+                  this.messageService,
+                  'Orden de Compra actualizada con exito!',
+                );
               },
               error: () => {
                 this.progressSpinnerService.hidden();
@@ -141,7 +151,21 @@ export class OrdersFormComponent implements OnInit {
             );
             forkJoin(createCalls).subscribe({
               next: () => {
+                this.form.reset();
+                this.supplierId = undefined!;
+                const productsFormArray = this.form.get('products') as any;
+                if (productsFormArray && productsFormArray.clear) {
+                  productsFormArray.clear();
+                }
+                setTimeout(() => {
+                  this.supplierId = 0;
+                  this.addProduct();
+                }, 0);
                 this.progressSpinnerService.hidden();
+                showSuccess(
+                  this.messageService,
+                  'Orden de Compra registrada con exito!',
+                );
               },
               error: () => {
                 this.progressSpinnerService.hidden();
@@ -150,6 +174,9 @@ export class OrdersFormComponent implements OnInit {
           } else {
             this.progressSpinnerService.hidden();
           }
+        },
+        error: () => {
+          this.progressSpinnerService.hidden();
         },
       });
     }
