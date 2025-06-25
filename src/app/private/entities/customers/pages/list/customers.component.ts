@@ -48,15 +48,8 @@ export class CustomersListComponent implements OnInit {
       money: false,
     },
     {
-      header: 'Nombre(s)',
-      field: 'name',
-      clickable: false,
-      image: false,
-      money: false,
-    },
-    {
-      header: 'Apellido(s)',
-      field: 'surname',
+      header: 'Nombre(s) y apellido(s)',
+      field: 'fullName',
       clickable: false,
       image: false,
       money: false,

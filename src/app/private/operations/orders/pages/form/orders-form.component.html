@@ -36,6 +36,7 @@
           </p-button>
         </div>
         <app-product-table
+          [operation]="'orders'"
           [products]="products"
           [parentForm]="form"
           [addProductEvent]="addProductEvent"

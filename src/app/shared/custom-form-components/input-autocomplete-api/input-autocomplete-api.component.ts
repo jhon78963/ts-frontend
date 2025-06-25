@@ -52,6 +52,7 @@ export class InputAutocompleteApiComponent implements OnInit, OnChanges {
   @Input() bodyColumn: string = '';
   @Input() multipleOptions: boolean = false;
   @Input() itemId: number = 0;
+  @Input() enableCollectionToSave = true;
   isDropdownOpen: boolean = false;
   itemSelected = output<AutocompleteResponse | null>();
   private keyToAddString = '+ ';
@@ -121,10 +122,12 @@ export class InputAutocompleteApiComponent implements OnInit, OnChanges {
                 if (res.length > 0) {
                   this.collection = res;
                 } else {
-                  this.collection.push({
-                    id: 0,
-                    value: `${this.keyToAddString}${value}`,
-                  });
+                  if (this.enableCollectionToSave) {
+                    this.collection.push({
+                      id: 0,
+                      value: `${this.keyToAddString}${value}`,
+                    });
+                  }
                 }
                 this.isDropdownOpen = true;
               },
@@ -209,7 +212,9 @@ export class InputAutocompleteApiComponent implements OnInit, OnChanges {
     if (item.id > 0) {
       this.itemSelected.emit(formattedItem);
     } else {
-      this.addNewItem(formattedItem);
+      if (this.enableCollectionToSave) {
+        this.addNewItem(formattedItem);
+      }
     }
     this.collection = [];
   }

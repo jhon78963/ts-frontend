@@ -59,7 +59,6 @@ export class SalesFormComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     date: ['', Validators.required],
-    status: ['PENDING', Validators.nullValidator],
     customerId: ['', Validators.required],
     products: this.formBuilder.array([]),
   });
@@ -143,8 +142,8 @@ export class SalesFormComponent implements OnInit {
                   response.saleId,
                   product.product.id,
                   {
-                    quantity: product.quantity,
-                    price: product.price,
+                    quantity: Number(product.quantity),
+                    price: Number(product.price),
                   },
                 );
               },

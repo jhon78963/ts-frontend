@@ -23,10 +23,11 @@
                 label="Producto"
                 type="text"
                 placeholder="Escriba el producto a buscar"
-                collectionToCall="products/autocomplete"
+                [collectionToCall]="operation + '/products/autocomplete'"
                 collectionToSave="products"
                 bodyColumn="name"
                 queryParam="search"
+                [enableCollectionToSave]="enableCollectionToSave"
                 [itemId]="
                   product && product.value.product && product.value.product.id
                 "

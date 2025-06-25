@@ -40,6 +40,8 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   @Input() addProductEvent = new EventEmitter<void>();
   @Input() products: Product[] = [];
   @Input() parentForm!: FormGroup;
+  @Input() enableCollectionToSave = true;
+  @Input() operation: string | null = null;
   productSelected = output<any>();
   mainForm: FormGroup;
 

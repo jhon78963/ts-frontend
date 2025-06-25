@@ -10,7 +10,7 @@
           placeholder="Escriba el nombre del cliente a buscar"
           collectionToCall="customers/autocomplete"
           collectionToSave="customers"
-          bodyColumn="name"
+          bodyColumn="fullName"
           queryParam="search"
           [itemId]="customerId"
           (itemSelected)="setFormField('customerId', $event)">
@@ -36,7 +36,9 @@
           </p-button>
         </div>
         <app-product-table
+          [operation]="'sales'"
           [products]="products"
+          [enableCollectionToSave]="false"
           [parentForm]="form"
           [addProductEvent]="addProductEvent"
           (productSelected)="getProductSeletected($event)"></app-product-table>

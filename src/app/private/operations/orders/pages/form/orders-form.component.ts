@@ -59,7 +59,6 @@ export class OrdersFormComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     date: ['', Validators.required],
-    status: ['PENDING', Validators.nullValidator],
     supplierId: ['', Validators.required],
     products: this.formBuilder.array([]),
   });
@@ -114,7 +113,6 @@ export class OrdersFormComponent implements OnInit {
             );
             forkJoin(updateCalls).subscribe({
               next: () => {
-                this.form.reset();
                 this.progressSpinnerService.hidden();
                 showSuccess(
                   this.messageService,
