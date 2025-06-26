@@ -119,49 +119,25 @@ export class ProductsTableComponent implements OnInit, OnChanges {
         rejectIcon: 'none',
         accept: () => {
           this.progressSpinnerService.show();
-          if (this.operation == 'sales') {
-            this.saleProductService
-              .remove(this.operationId, productId)
-              .subscribe({
-                next: () => {
-                  showSuccess(
-                    this.messageService,
-                    'El producto ha sido eliminado',
-                  );
-                  this.productsArray.removeAt(index);
-                  this.progressSpinnerService.hidden();
-                },
-                error: () => {
-                  showError(
-                    this.messageService,
-                    'No se eleminó el producto, intenteló nuevamente',
-                  );
-                  this.productsArray.removeAt(index);
-                  this.progressSpinnerService.hidden();
-                },
-              });
-          } else {
-            this.orderProductService
-              .remove(this.operationId, productId)
-              .subscribe({
-                next: () => {
-                  showSuccess(
-                    this.messageService,
-                    'El producto ha sido eliminado',
-                  );
-                  this.productsArray.removeAt(index);
-                  this.progressSpinnerService.hidden();
-                },
-                error: () => {
-                  showError(
-                    this.messageService,
-                    'No se eleminó el producto, intenteló nuevamente',
-                  );
-                  this.productsArray.removeAt(index);
-                  this.progressSpinnerService.hidden();
-                },
-              });
-          }
+          const service =
+            this.operation === 'sales'
+              ? this.saleProductService
+              : this.orderProductService;
+          service.remove(this.operationId, productId).subscribe({
+            next: () => {
+              showSuccess(this.messageService, 'El producto ha sido eliminado');
+              this.productsArray.removeAt(index);
+              this.progressSpinnerService.hidden();
+            },
+            error: () => {
+              showError(
+                this.messageService,
+                'No se eliminó el producto, inténtelo nuevamente',
+              );
+              this.productsArray.removeAt(index);
+              this.progressSpinnerService.hidden();
+            },
+          });
         },
         reject: () => {},
       });
@@ -169,21 +145,6 @@ export class ProductsTableComponent implements OnInit, OnChanges {
       this.productsArray.removeAt(index);
     }
   }
-
-  // productButton(productId: number = 0, type: string = '', index: number = 0) {
-  //   if (type == 'create') {
-  //     this.productSelected.emit({
-  //       productId: this.productsArray.at(index).value,
-  //       type,
-  //     });
-  //   } else {
-  //     this.productSelected.emit({ productId, type });
-  //   }
-  // }
-
-  // sendProduct(type: string) {
-  //   this.productSelected.emit({ type });
-  // }
 
   setFormField(
     field: 'product',
