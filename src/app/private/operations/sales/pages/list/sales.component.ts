@@ -55,18 +55,11 @@ export class SalesListComponent implements OnInit {
       money: false,
     },
     {
-      header: 'Estado',
-      field: 'status',
-      clickable: false,
-      image: false,
-      money: false,
-    },
-    {
       header: 'Total',
       field: 'total',
       clickable: false,
       image: false,
-      money: false,
+      money: true,
     },
     {
       header: 'Acción',

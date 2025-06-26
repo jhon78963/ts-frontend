@@ -37,11 +37,11 @@
         </div>
         <app-product-table
           [operation]="'sales'"
+          [operationId]="saleId"
           [products]="products"
           [enableCollectionToSave]="false"
           [parentForm]="form"
-          [addProductEvent]="addProductEvent"
-          (productSelected)="getProductSeletected($event)"></app-product-table>
+          [addProductEvent]="addProductEvent"></app-product-table>
       </div>
       <div class="flex w-full gap-2">
         <button

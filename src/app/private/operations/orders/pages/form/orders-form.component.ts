@@ -58,7 +58,7 @@ export class OrdersFormComponent implements OnInit {
   }
 
   form: FormGroup = this.formBuilder.group({
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     supplierId: ['', Validators.required],
     products: this.formBuilder.array([]),
   });

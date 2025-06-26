@@ -16,11 +16,15 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { Product } from '../../models/products.mode';
 import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.interface';
+import { SaleProductService } from '../../../../operations/sales/services/saleProducts.service';
+import { showError, showSuccess } from '../../../../../utils/notifications';
+import { ProgressSpinnerService } from '../../../../../services/progress-spinner.service';
+import { OrderProductService } from '../../../../operations/orders/services/orderProducts.service';
 
 @Component({
   selector: 'app-product-table',
@@ -37,6 +41,7 @@ import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.
   providers: [ConfirmationService],
 })
 export class ProductsTableComponent implements OnInit, OnChanges {
+  @Input() operationId: number = 0;
   @Input() addProductEvent = new EventEmitter<void>();
   @Input() products: Product[] = [];
   @Input() parentForm!: FormGroup;
@@ -45,7 +50,14 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   productSelected = output<any>();
   mainForm: FormGroup;
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly confirmationService: ConfirmationService,
+    private readonly saleProductService: SaleProductService,
+    private readonly orderProductService: OrderProductService,
+    private readonly messageService: MessageService,
+    private readonly progressSpinnerService: ProgressSpinnerService,
+  ) {
     this.mainForm = this.formBuilder.group({
       products: this.formBuilder.array([this.createRow()]),
     });
@@ -75,7 +87,6 @@ export class ProductsTableComponent implements OnInit, OnChanges {
 
   updateParent() {
     const productsValue = this.productsArray.value;
-    console.log(this.parentForm.get('products')?.value);
     this.parentForm.get('products')?.setValue(productsValue);
   }
 
@@ -95,24 +106,84 @@ export class ProductsTableComponent implements OnInit, OnChanges {
     this.productsArray.push(this.createRow());
   }
 
-  removeItem(productId: number, index: number) {
-    this.productsArray.removeAt(index);
-  }
-
-  productButton(productId: number = 0, type: string = '', index: number = 0) {
-    if (type == 'create') {
-      this.productSelected.emit({
-        productId: this.productsArray.at(index).value,
-        type,
+  removeItem(productId: number, index: number, event: any) {
+    if (productId) {
+      this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Deseas eliminar este producto?',
+        header: 'Eliminar producto',
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass: 'p-button-danger p-button-text',
+        rejectButtonStyleClass: 'p-button-text p-button-text',
+        acceptIcon: 'none',
+        rejectIcon: 'none',
+        accept: () => {
+          this.progressSpinnerService.show();
+          if (this.operation == 'sales') {
+            this.saleProductService
+              .remove(this.operationId, productId)
+              .subscribe({
+                next: () => {
+                  showSuccess(
+                    this.messageService,
+                    'El producto ha sido eliminado',
+                  );
+                  this.productsArray.removeAt(index);
+                  this.progressSpinnerService.hidden();
+                },
+                error: () => {
+                  showError(
+                    this.messageService,
+                    'No se eleminó el producto, intenteló nuevamente',
+                  );
+                  this.productsArray.removeAt(index);
+                  this.progressSpinnerService.hidden();
+                },
+              });
+          } else {
+            this.orderProductService
+              .remove(this.operationId, productId)
+              .subscribe({
+                next: () => {
+                  showSuccess(
+                    this.messageService,
+                    'El producto ha sido eliminado',
+                  );
+                  this.productsArray.removeAt(index);
+                  this.progressSpinnerService.hidden();
+                },
+                error: () => {
+                  showError(
+                    this.messageService,
+                    'No se eleminó el producto, intenteló nuevamente',
+                  );
+                  this.productsArray.removeAt(index);
+                  this.progressSpinnerService.hidden();
+                },
+              });
+          }
+        },
+        reject: () => {},
       });
     } else {
-      this.productSelected.emit({ productId, type });
+      this.productsArray.removeAt(index);
     }
   }
 
-  sendProduct(type: string) {
-    this.productSelected.emit({ type });
-  }
+  // productButton(productId: number = 0, type: string = '', index: number = 0) {
+  //   if (type == 'create') {
+  //     this.productSelected.emit({
+  //       productId: this.productsArray.at(index).value,
+  //       type,
+  //     });
+  //   } else {
+  //     this.productSelected.emit({ productId, type });
+  //   }
+  // }
+
+  // sendProduct(type: string) {
+  //   this.productSelected.emit({ type });
+  // }
 
   setFormField(
     field: 'product',

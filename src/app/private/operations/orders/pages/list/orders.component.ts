@@ -73,7 +73,7 @@ export class OrdersListComponent implements OnInit {
       field: 'total',
       clickable: false,
       image: false,
-      money: false,
+      money: true,
     },
     {
       header: 'Acción',

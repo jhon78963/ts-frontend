@@ -15,12 +15,12 @@ import { Sale, SaleResponse } from '../../models/sales.model';
 import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.interface';
 import { formatDateTime } from '../../../../../utils/dates';
 import { Product } from '../../../../inventories/products/models/products.mode';
-import { ProductsTableComponent } from '../../../../inventories/products/components/table/products-table.component';
 import { SaleProductService } from '../../services/saleProducts.service';
 import { forkJoin } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { showSuccess } from '../../../../../utils/notifications';
+import { ProductsTableComponent } from '../../../../inventories/products/components/table/products-table.component';
 
 @Component({
   selector: 'app-sales-form',
@@ -58,7 +58,7 @@ export class SalesFormComponent implements OnInit {
   }
 
   form: FormGroup = this.formBuilder.group({
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     customerId: ['', Validators.required],
     products: this.formBuilder.array([]),
   });
@@ -180,10 +180,6 @@ export class SalesFormComponent implements OnInit {
 
   addProduct() {
     this.addProductEvent.emit();
-  }
-
-  getProductSeletected(form: any) {
-    console.log(form);
   }
 
   get isFormValid(): boolean {
