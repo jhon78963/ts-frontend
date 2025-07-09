@@ -51,7 +51,12 @@
           pButton
           [outlined]="true"
           label="Regresar"></button>
-        <button class="w-full" type="submit" pButton label="Guardar"></button>
+        <button
+          class="w-full"
+          type="submit"
+          pButton
+          label="Guardar"
+          [disabled]="!isFormValid"></button>
       </div>
     </div>
   </form>

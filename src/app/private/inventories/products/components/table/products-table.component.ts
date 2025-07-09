@@ -97,8 +97,8 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   createRow(): FormGroup {
     return this.formBuilder.group({
       product: ['', Validators.required],
-      quantity: ['', [Validators.required, Validators.min(0)]],
-      price: ['', [Validators.required, Validators.min(0)]],
+      quantity: ['', [Validators.required, Validators.min(1)]],
+      price: ['', [Validators.required, Validators.min(0.1)]],
     });
   }
 
@@ -107,7 +107,7 @@ export class ProductsTableComponent implements OnInit, OnChanges {
   }
 
   removeItem(productId: number, index: number, event: any) {
-    if (productId) {
+    if (productId && this.operationId) {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Deseas eliminar este producto?',
@@ -152,5 +152,11 @@ export class ProductsTableComponent implements OnInit, OnChanges {
     index: number,
   ) {
     this.productsArray.at(index)?.get(field)?.setValue(value);
+    this.productsArray
+      .at(index)
+      ?.get('price')
+      ?.setValue(
+        this.operation === 'sales' ? value?.salePrice : value?.purchasePrice,
+      );
   }
 }

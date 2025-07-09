@@ -202,10 +202,12 @@ export class InputAutocompleteApiComponent implements OnInit, OnChanges {
   }
 
   getSelecteditem(item: AutocompleteResponse) {
-    const formattedItem = {
+    const formattedItem: any = {
       id: item.id,
       value: item.value.replace(this.keyToAddString, '').toUpperCase(),
     };
+    if (item.salePrice) formattedItem.price = item.salePrice;
+    if (item.purchasePrice) formattedItem.price = item.purchasePrice;
     this.formGroup
       .get('item')
       ?.setValue(formattedItem.value, { emitEvent: false });
