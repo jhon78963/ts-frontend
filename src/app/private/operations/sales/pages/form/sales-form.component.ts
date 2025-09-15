@@ -14,7 +14,7 @@ import { ProgressSpinnerService } from '../../../../../services/progress-spinner
 import { Sale, SaleResponse } from '../../models/sales.model';
 import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.interface';
 import { formatDateTime } from '../../../../../utils/dates';
-import { Product } from '../../../../inventories/products/models/products.mode';
+import { Product } from '../../../../inventories/products/models/products.model';
 import { SaleProductService } from '../../services/saleProducts.service';
 import { forkJoin } from 'rxjs';
 import { ToastModule } from 'primeng/toast';

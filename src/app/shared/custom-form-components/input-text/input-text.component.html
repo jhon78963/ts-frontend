@@ -10,3 +10,6 @@
     [name]="controlName" />
   <label [for]="id">{{ label }}</label>
 </span>
+@if (errorMessage) {
+  <span class="error-message">* {{ errorMessage }}</span>
+}

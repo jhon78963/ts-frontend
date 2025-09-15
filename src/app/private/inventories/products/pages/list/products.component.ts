@@ -14,7 +14,7 @@ import { PaginatorState } from 'primeng/paginator';
 import { debounceTime, Observable } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
 import { showError, showSuccess } from '../../../../../utils/notifications';
-import { Product } from '../../models/products.mode';
+import { Product } from '../../models/products.model';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({

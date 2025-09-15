@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { ProductsService } from '../../services/products.service';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -14,8 +14,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProgressSpinnerService } from '../../../../../services/progress-spinner.service';
 import { FileService } from '../../../../../services/file.service';
-import { Product } from '../../models/products.mode';
-import { BASE_S3_URL } from '../../../../../utils/constants';
+import { Product, ProductStatus } from '../../models/products.model';
+import { formatDateTime } from '../../../../../utils/dates';
 
 @Component({
   selector: 'app-products-form',
@@ -45,6 +45,7 @@ export class ProductsFormComponent implements OnInit {
     private readonly fileService: FileService,
     private readonly progressSpinnerService: ProgressSpinnerService,
     private readonly route: ActivatedRoute,
+    private readonly datePipe: DatePipe,
   ) {
     if (this.route.snapshot.paramMap.get('id')) {
       this.productId = Number(this.route.snapshot.paramMap.get('id'));
@@ -56,7 +57,9 @@ export class ProductsFormComponent implements OnInit {
     salePrice: ['', Validators.required],
     purchasePrice: ['', Validators.required],
     stock: ['', Validators.required],
+    minStock: ['', Validators.required],
     image: [null, Validators.nullValidator],
+    expirationDate: [null, Validators.nullValidator],
     status: ['AVAILABLE', Validators.nullValidator],
     categoryId: ['', Validators.required],
     brandId: ['', Validators.required],
@@ -91,10 +94,16 @@ export class ProductsFormComponent implements OnInit {
           this.categoryId = response.categoryId;
           this.brandId = response.brandId;
           this.measurementId = response.measurementId;
-          if (response.image)
-            this.imagePreview = `${BASE_S3_URL}${response.image}`;
+          if (response.image) this.imagePreview = `${response.image}`;
         });
     }
+  }
+
+  mapLabelToKey(label: string): keyof typeof ProductStatus {
+    const entry = Object.entries(ProductStatus).find(
+      ([, value]) => value === label,
+    );
+    return (entry?.[0] as keyof typeof ProductStatus) ?? 'AVAILABLE';
   }
 
   saveProductButton() {
@@ -106,7 +115,17 @@ export class ProductsFormComponent implements OnInit {
     const imageFile =
       this.form.value.image instanceof File ? this.form.value.image : null;
     const product = new Product(this.form.value);
-
+    product.status = this.mapLabelToKey(this.form.value.status);
+    if (product.expirationDate) {
+      const expirationDateValue =
+        typeof product.expirationDate === 'string'
+          ? new Date(product.expirationDate)
+          : product.expirationDate;
+      product.expirationDate = formatDateTime(
+        expirationDateValue,
+        this.datePipe,
+      );
+    }
     const proceedToSave = (imagePath?: string) => {
       if (imagePath) product.image = imagePath;
 

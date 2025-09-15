@@ -1,4 +1,4 @@
-import { Product } from '../../../inventories/products/models/products.mode';
+import { Product } from '../../../inventories/products/models/products.model';
 
 export interface ISale {
   id: number;

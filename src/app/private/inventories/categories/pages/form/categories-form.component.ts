@@ -19,6 +19,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
   styleUrl: './categories-form.component.scss',
 })
 export class CategoriesFormComponent implements OnInit {
+  errorMessage: string = '';
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly categoriesService: CategoriesService,
@@ -43,8 +44,15 @@ export class CategoriesFormComponent implements OnInit {
       if (this.dynamicDialogConfig.data.id) {
         const id = this.dynamicDialogConfig.data.id;
         this.categoriesService.edit(id, role).subscribe({
-          next: () => this.dialogRef.close({ success: true }),
-          error: () => this.dialogRef.close({ error: true }),
+          next: (resp: any) => {
+            console.log(resp);
+            // this.dialogRef.close({ success: true });
+          },
+          error: (err: any) => {
+            console.log(err.error.message);
+            this.errorMessage = err.error.message;
+            // this.dialogRef.close({ error: true });
+          },
         });
       } else {
         this.categoriesService.create(role).subscribe({

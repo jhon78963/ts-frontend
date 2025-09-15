@@ -10,13 +10,21 @@
     border-color: var(--primary-color);
 }
 
-.p-float-label input:focus ~ label,
-.p-float-label input.p-filled ~ label,
-.p-float-label textarea:focus ~ label,
-.p-float-label textarea.p-filled ~ label,
-.p-float-label .p-inputwrapper-focus ~ label,
-.p-float-label .p-inputwrapper-filled ~ label {
+.p-float-label {
+  input:focus ~ label,
+  input.p-filled ~ label,
+  textarea:focus ~ label,
+  textarea.p-filled ~ label,
+  .p-inputwrapper-focus ~ label,
+  .p-inputwrapper-filled ~ label {
     top: -0.7rem;
     left: 0;
     font-size: 12px;
+  }
+}
+.error-message {
+  position: absolute;
+  color: #f02c2c;
+  font-weight: 700;
+  font-size: 11px;
 }

@@ -14,7 +14,7 @@ import { ProgressSpinnerService } from '../../../../../services/progress-spinner
 import { Order, OrderResponse } from '../../models/orders.model';
 import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.interface';
 import { formatDateTime } from '../../../../../utils/dates';
-import { Product } from '../../../../inventories/products/models/products.mode';
+import { Product } from '../../../../inventories/products/models/products.model';
 import { ProductsTableComponent } from '../../../../inventories/products/components/table/products-table.component';
 import { OrderProductService } from '../../services/orderProducts.service';
 import { forkJoin } from 'rxjs';

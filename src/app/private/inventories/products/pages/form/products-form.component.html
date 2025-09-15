@@ -11,6 +11,16 @@
           controlName="name"></app-input-text>
       </div>
       <div class="field mb-3 col-12 md:col-6">
+        <app-input-date
+          label="Fecha de vencimiento"
+          for="date"
+          type="text"
+          id="date"
+          placeholder="Ingresa la fecha de vencimiento"
+          [showIcon]="false"
+          controlName="expirationDate"></app-input-date>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
         <app-input-text
           label="Stock"
           for="stock"
@@ -18,6 +28,16 @@
           id="stock"
           placeholder="Ingresa el stock del producto"
           controlName="stock"
+          pKeyFilter="int"></app-input-text>
+      </div>
+      <div class="field mb-3 col-12 md:col-6">
+        <app-input-text
+          label="Mínimo Stock"
+          for="minStock"
+          type="text"
+          id="minStock"
+          placeholder="Ingresa el mínimo stock del producto"
+          controlName="minStock"
           pKeyFilter="int"></app-input-text>
       </div>
       <div class="field mb-3 col-12 md:col-6">

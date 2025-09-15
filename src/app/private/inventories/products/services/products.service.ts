@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../../services/api.service';
 import { BehaviorSubject, debounceTime, map, Observable } from 'rxjs';
-import { Product, ProductListResponse } from '../models/products.mode';
+import { Product, ProductListResponse } from '../models/products.model';
 
 @Injectable({
   providedIn: 'root',

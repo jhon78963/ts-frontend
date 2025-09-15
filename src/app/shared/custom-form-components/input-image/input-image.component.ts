@@ -13,10 +13,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { environment } from '../../../../environments/environment';
 import { ButtonModule } from 'primeng/button';
 import { getFileSize } from '../../../utils/files';
-import { BASE_S3_URL } from '../../../utils/constants';
 
 export interface InputImage {
   images: File | File[];
@@ -49,11 +47,9 @@ export class InputImageComponent implements OnInit, OnChanges {
   index: number = 0;
   newImageIndexes: any[] = [];
   newImages: any[] = [];
-  apiUrl = environment.BASE_URL;
   selectedFiles: File[] = [];
   imagePreviews: string[] = [];
   isDragging = false;
-  s3_url: string = BASE_S3_URL;
 
   ngOnInit(): void {
     console.log(this.productId);
@@ -182,8 +178,6 @@ export class InputImageComponent implements OnInit, OnChanges {
   private addFiles(files: FileList): void {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-
-      // Verificar si ya fue agregado
       const alreadyAdded = this.selectedFiles.some(
         f => f.name === file.name && f.size === file.size,
       );
@@ -196,7 +190,6 @@ export class InputImageComponent implements OnInit, OnChanges {
       this.selectedFiles.push(file);
       const blobUrl = URL.createObjectURL(file);
       this.imagePreviews.push(blobUrl);
-
       this.images.push({
         name: file.name,
         size: file.size,

@@ -19,7 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedModule } from '../../../../../shared/shared.module';
-import { Product } from '../../models/products.mode';
+import { Product } from '../../models/products.model';
 import { AutocompleteResponse } from '../../../../../shared/models/autocomplete.interface';
 import { SaleProductService } from '../../../../operations/sales/services/saleProducts.service';
 import { showError, showSuccess } from '../../../../../utils/notifications';
